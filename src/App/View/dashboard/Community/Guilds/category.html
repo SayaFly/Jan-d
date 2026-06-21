@@ -2,17 +2,17 @@
 {% block title %}{{title}}{% endblock %}
 {% block body %}
 <div class="page-content">
-  
+
      <!-- jquery data -->
     <input type="hidden" name="totalpages" value="{% if forums.total == 0 %}1{% else %}{{forums.total}}{% endif %}">
     <input type="hidden" name="currentpage" value="{{currentpage}}">
     <input type="hidden" name="page_url" value="/guilds/{{forums.id}}-{{forums.slug}}">
     <!-- end jquery data -->
-  
+
     <div class="aside-toolbar-content">
         <a href="/guilds">Home</a> - {{forums.name}}
     </div>
-  
+
     <div class="aside-toolbar-content">
         {% if forums.post_threads != false %}
         <div style="float: left; margin-top: 8px">
@@ -22,7 +22,7 @@
         {% endif %}
         <ul id="pagination" class="pagination"></ul>
     </div>
-  
+
     {% if forums.topic is not empty %}
     <article id="forum-category" class="default-section">
         <div class="aside-content">

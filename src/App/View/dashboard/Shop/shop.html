@@ -25,7 +25,7 @@
                 </div>
                 <img class="payment-loader" style="display: none;" src="/assets/theme/default/images/loader.gif">
             </div>
-          
+
             <div class="offers-container">
                 {% for offer in data.shop %}
                 <div class="offer-container" id="offer-{{offer.id}}">
@@ -51,7 +51,7 @@
             {% for value in data.currencys %}
                 <div class="purse-container {{value.currency}}">
                    {{value.amount}}
-                </div> 
+                </div>
             {% endfor %}
         </div>
         <aside class="default-section">

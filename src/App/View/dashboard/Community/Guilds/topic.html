@@ -2,17 +2,17 @@
 {% block title %}{{title}}{% endblock %}
 {% block body %}
 <div class="page-content">
-  
+
     <!-- jquery data -->
     <input type="hidden" name="totalpages" value="{{topic.total}}">
     <input type="hidden" name="currentpage" value="{{currentpage}}">
     <input type="hidden" name="page_url" value="/guilds/{{topic.guild_id}}/thread/{{topic.id}}-{{topic.slug}}">
     <!-- end jquery data -->
-  
+
     <div class="aside-toolbar-content">
         <a href="/guilds">Home</a> - <a href="/guilds/{{topic.guild_id}}-{{topic.slug}}">{{topic.forum.name}}</a> - {{topic.subject}}
     </div>
-  
+
     <div class="aside-toolbar-content">
         <div style="float: left; margin-top: 8px">
               {% if topic.forum.post_messages != false and topic.locked == 0 %}
@@ -25,7 +25,7 @@
         </div>
         <ul id="pagination" class="pagination"></ul>
     </div>
-  
+
    {% for post in topic.posts %}
    <article class="default-section">
       <div class="aside-title-content"></div>
@@ -62,7 +62,7 @@
                         {{post.content|raw}}
                     </div>
                     <div class="forum-likes-container" data-id="{{post.id}}">
-                        
+
                         {% if loop.first %}
                             {% if topic.locked == 1 and currentpage < 2 %}
                             <div class="forum-closed">
@@ -71,7 +71,7 @@
                             </div>
                             {% endif %}
                         {% endif %}
-                      
+
                         <div class="forum-likes" {% if post.likes == false %}style="display:none"{% endif %} data-id="{{post.id}}">
                         <div class="forum-likes-icon" style="float:left;"></div>
 

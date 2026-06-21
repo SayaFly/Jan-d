@@ -13,9 +13,9 @@
         <article class="default-section">
             <div class="aside-title-content">{{site.shortname}} {{locale.club_benefits}}</div>
             <div class="aside-content">
-                
+
                 {{content|raw}}
-              
+
                 <h4>Badges</h4>
                 {% for badges in data.vip_badges %}
                     <img src="{{site.cpath}}/c_images/album1584/{{badges|trim('value')}}.gif">
@@ -30,7 +30,7 @@
             {% for value in data.currencys %}
                 <div class="purse-container {{value.currency}}">
                    {{value.amount}}
-                </div> 
+                </div>
             {% endfor %}
         </div>
         <aside class="default-section">

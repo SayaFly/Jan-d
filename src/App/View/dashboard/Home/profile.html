@@ -13,7 +13,7 @@
          <input type="hidden" name="csrftoken" value="{{csrf_token}}" />
       </div>
       {% endif %}
-      
+
    </div>
 </header>
 <div id="searchOverlay" class="overlay">
@@ -27,10 +27,10 @@
 </div>
 {% if data.player.widgets %}
 <div class="page-content" {% if data.player.background.name is not empty%} data-background="{{data.player.background.name}}" {% endif %}>
-{% for widget in data.player.widgets %} 
+{% for widget in data.player.widgets %}
 {% include "Home/Profile/widgets.html" %}
 {% endfor %}
-{% for widget in data.player.notes %} 
+{% for widget in data.player.notes %}
 {% include "Home/Profile/notes.html" %}
 {% endfor %}
 {% for sticker in data.player.widgets %}
@@ -44,7 +44,7 @@
 </div>
 <style>
   .page-content {
-      height: 800px !important; 
+      height: 800px !important;
    }
   .widget {
       cursor: pointer

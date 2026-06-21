@@ -3,9 +3,9 @@
 {% block body %}
         <div class="page-content">
             <article class="default-section">
-                
+
                 {% include "Settings/panel.html" %}
-                
+
                 <h3 class="aside-title">{{locale.title}}</h3>
                 <form action="" method="post" class="default-prevent">
                     <input type="hidden" id="verification_enabled" value="{% if auth_enabled %}{% if player.secret_key is not null %}app{% endif %}{% if player.pincode is not null %}pincode{% endif %}{% else %}{% endif %}">
@@ -26,7 +26,7 @@
                         <h4 class="label-title">{{locale.auth_title}}</h4>
                         <span class="label-description">{{locale.auth_label}}</span>
                     </label>
-                  
+
                     <div class="verification-container" style="display:none;">
                         <div class="verification-select">
                             <h4>{{locale.method_title}}</h4>
@@ -52,7 +52,7 @@
                             <p>{{locale.link_account_label}}</p>
                             <p style="text-align: center;">
                                 <input type="hidden" id="twosteps_login_data_code" value="{{token}}">
-                                 
+
                                 <img src="https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth%3A%2F%2Ftotp%2F{{site.shortname}}%3A{{player.username}}%3Fsecret%3D{{token}}%26issuer%3D{{site.shortname}}" alt="{{site.shortname}}">
                             </p>
                         </div>

@@ -25,7 +25,7 @@
 
                 <tbody class="marketplace">
                 {% for value in values %}
-                    {% if value.cost_points > 0 %}                   
+                    {% if value.cost_points > 0 %}
                         <tr>
                             <td><img src="{{site.cpath}}/meubels/{{value.catalog_name|replace({'*': "_"})}}_icon.png" class="pixelated"></td>
                             <td><a href="#" style="border-bottom: 1px dotted;" class="payment-button" data-state="catalogue" data-id="{{value.id}}" data-costs="{{ (cat.discount/100) * value.cost_points }}" data-type="{{item_currency}}" data-image="{{value.catalog_name|replace({'*': "_"})}}">{{value.catalog_name|replace({'*': "_"})}}</a></td>
@@ -42,7 +42,7 @@
         </article>
     </div>
     <div class="right-side"  style="margin-top: 50px;">
-      
+
         <aside class="default-section">
             <div class="aside-title-content">{{cat.cat_name}} - {{cat.discount}}% discount</div>
             <div class="aside-content">
@@ -50,7 +50,7 @@
                 At the big marketplace you can buy items that you would normally find in the catalog for a better price!<br /><br /><a href="/marketplace/my/inventory">Go to my marketplace!</a>
             </div>
         </aside>
-      
+
         <aside class="default-section">
             <div class="aside-title-content">{{locale.looking_for}}</div>
             <div class="aside-content">
