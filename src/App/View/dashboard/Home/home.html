@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+{% block body %}
+{% if player %}
+<div class="dashboard-home d-flex flex-column gap-4">
+    <section class="hero-panel card-glass dashboard-reveal">
+        <div class="hero-copy">
+            <span class="eyebrow">Control center</span>
+            <h2>Willkommen zurück, {{player.username}}</h2>
+            <p>Behalte News, Räume, Gruppen und Freunde in einer dunklen Dashboard-Oberfläche mit schnellen Aktionen und Live-Status im Blick.</p>
+            <div class="hero-actions">
+                <button class="btn btn-primary hotel-dialog-button">{{locale_base.header_to}} {{site.sitename}}</button>
+                <a href="/profile/{{player.username}}" class="btn btn-outline-light">{{locale_base.user_profile}}</a>
+                <a href="/settings" class="btn btn-outline-light">{{locale_base.user_settings}}</a>
+            </div>
+        </div>
+        <div class="hero-stats">
+            <div class="metric-card">
+                <span>Online</span>
+                <strong class="counter" data-count="{{online_count}}">{{online_count}}</strong>
+                <small>Spieler gerade im Hotel</small>
+            </div>
+            <div class="metric-card">
+                <span>Credits</span>
+                <strong class="counter" data-count="{{player.credits}}">{{player.credits}}</strong>
+                <small>Dein Hauptguthaben</small>
+            </div>
+            <div class="metric-card">
+                <span>News</span>
+                <strong class="counter" data-count="{{news|length}}">{{news|length}}</strong>
+                <small>Aktuelle Artikel im Feed</small>
+            </div>
+            <div class="metric-card">
+                <span>Freunde</span>
+                <strong class="counter" data-count="{{friends|length}}">{{friends|length}}</strong>
+                <small>Aktuell online</small>
+            </div>
+        </div>
+    </section>
+
+    <section class="dashboard-grid dashboard-grid-primary">
+        <article class="dashboard-card dashboard-reveal">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">Feed</span>
+                    <h3>{{locale.latest_news}}</h3>
+                </div>
+                <a href="/articles" class="btn btn-sm btn-outline-light">Alle News</a>
+            </div>
+            <div class="news-grid">
+                {% for item in news|slice(0, 3) %}
+                <a href="/article/{{item.id}}-{{item.slug}}" class="news-card">
+                    <div class="news-cover" style="background-image:url('{{item.header}}');"></div>
+                    <div class="news-body">
+                        <div class="news-meta">
+                            <span>{{item.player.username}}</span>
+                            <span>{{item.timestamp|date("d.m H:i")}}</span>
+                        </div>
+                        <h4>{{item.title}}</h4>
+                        <p>{{item.short_story}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </article>
+
+        <article class="dashboard-card dashboard-reveal">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">Hotel</span>
+                    <h3>Wallet & Quick Stats</h3>
+                </div>
+            </div>
+            <div class="wallet-grid">
+                <div class="wallet-item primary">
+                    <span>Credits</span>
+                    <strong>{{player.credits}}</strong>
+                </div>
+                {% for value in currencys|slice(0, 3) %}
+                <div class="wallet-item">
+                    <span>{{value.currency}}</span>
+                    <strong>{{value.amount}}</strong>
+                </div>
+                {% endfor %}
+                <div class="wallet-item muted">
+                    <span>Gruppen</span>
+                    <strong>{{groups|length}}</strong>
+                </div>
+                <div class="wallet-item muted">
+                    <span>Top Räume</span>
+                    <strong>{{rooms|length}}</strong>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <section class="dashboard-grid">
+        <article class="dashboard-card dashboard-reveal">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">Traffic</span>
+                    <h3>{{locale.popular_rooms}}</h3>
+                </div>
+            </div>
+            <div class="stack-list">
+                {% if rooms is empty %}
+                <div class="empty-state">{{locale.popular_no_rooms}}</div>
+                {% endif %}
+                {% for row in rooms|slice(0, 5) %}
+                <div class="stack-item room-stack-item">
+                    <div>
+                        <strong>{{row.name}}</strong>
+                        <span>von {{row.player.username}}</span>
+                    </div>
+                    <div class="stack-actions">
+                        <span class="badge text-bg-dark">{{row.users}} User</span>
+                        <a href="{% if player.online %}/api/room/{{row.id}}{% else %}/hotel?room={{row.id}}{% endif %}" class="btn btn-sm btn-outline-light">{{locale.goto_room}}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </article>
+
+        <article class="dashboard-card dashboard-reveal">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">Social</span>
+                    <h3>{{locale.popular_groups}}</h3>
+                </div>
+            </div>
+            <div class="stack-list compact-list">
+                {% if groups is empty %}
+                <div class="empty-state">{{locale.popular_no_groups}}</div>
+                {% endif %}
+                {% for row in groups|slice(0, 5) %}
+                <div class="stack-item">
+                    <div class="group-badge"><img src="{{site.cpath}}/c_images/Badgeparts/generated/{{row.badge}}.png" alt="{{row.name}}"></div>
+                    <div>
+                        <strong>{{row.name}}</strong>
+                        <span>{{row.description}}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </article>
+    </section>
+
+    <section class="dashboard-grid">
+        <article class="dashboard-card dashboard-reveal">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">Friends</span>
+                    <h3>{{locale.friends_online}}</h3>
+                </div>
+            </div>
+            <div class="friend-grid">
+                {% if friends is empty %}
+                <div class="empty-state">Keine Freunde aktuell online.</div>
+                {% endif %}
+                {% for friend in friends|slice(0, 6) %}
+                <a href="/profile/{{friend.username}}" class="friend-card">
+                    <img src="{{site.fpath}}?figure={{friend.look}}&head_direction=2&gesture=sml&headonly=true" alt="{{friend.username}}">
+                    <strong>{{friend.username}}</strong>
+                    <span>{{friend.motto}}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </article>
+
+        <article class="dashboard-card dashboard-reveal spotlight-card">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">Spotlight</span>
+                    <h3>{{locale.user_of_the_week}}</h3>
+                </div>
+            </div>
+            {% if oftw %}
+            <div class="spotlight-body">
+                <img src="{{site.fpath}}?figure={{oftw.look}}&action=std&direction=2&head_direction=2&size=l" alt="{{oftw.username}}">
+                <div>
+                    <strong>{{oftw.username}}</strong>
+                    <p>{{oftw.motto}}</p>
+                    <a href="/profile/{{oftw.username}}" class="btn btn-outline-light btn-sm">Profil öffnen</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="empty-state">Noch kein User der Woche eingetragen.</div>
+            {% endif %}
+        </article>
+    </section>
+</div>
+{% else %}
+<div class="landing-dashboard d-flex flex-column gap-4">
+    <section class="landing-hero card-glass dashboard-reveal">
+        <div class="landing-copy">
+            <span class="eyebrow">New Dashboard Theme</span>
+            <h1>{{site.sitename}} in einer modernen Dark UI</h1>
+            <p>Neues Bootstrap-Dashboard mit Animationen, Hover-Shadows, Stats und direktem Login. Alle bekannten CMS-Funktionen bleiben erhalten und werden in eine dunkle, moderne Oberfläche übertragen.</p>
+            <div class="hero-actions">
+                <button class="btn btn-primary login-dialog-button">{{locale_base.header_login}}</button>
+                <a href="/registration" class="btn btn-outline-light">{{locale_base.header_register}}</a>
+            </div>
+            <div class="landing-inline-stats">
+                <div><strong class="counter" data-count="{{online_count}}">{{online_count}}</strong><span>Online</span></div>
+                <div><strong class="counter" data-count="{{news|length}}">{{news|length}}</strong><span>News</span></div>
+                <div><strong class="counter" data-count="{{groups|length}}">{{groups|length}}</strong><span>Top Gruppen</span></div>
+            </div>
+        </div>
+        <div class="landing-login dashboard-reveal">
+            <form id="dashboard-inline-login" class="dashboard-login-form">
+                <div class="section-heading mb-3">
+                    <div>
+                        <span class="eyebrow">Secure access</span>
+                        <h3>Login</h3>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Benutzername</label>
+                    <input type="text" name="username" class="form-control form-control-lg" placeholder="{{site.shortname}}{{locale_base.login_name}}..." required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Passwort</label>
+                    <input type="password" name="password" class="form-control form-control-lg" placeholder="{{locale_base.login_password}}..." autocomplete="off" required>
+                </div>
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+                    <label class="form-check text-secondary mb-0">
+                        <input class="form-check-input" type="checkbox" name="remember_me">
+                        <span class="form-check-label">Login merken</span>
+                    </label>
+                    <a href="/password/claim" class="text-decoration-none small">{{locale_base.login_lost_password}}</a>
+                </div>
+                <input type="hidden" name="csrftoken" value="{{csrf_token}}">
+                <button type="submit" class="btn btn-primary w-100 dashboard-login-submit">{{locale_base.header_login}}</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="dashboard-grid dashboard-grid-primary">
+        <article class="dashboard-card dashboard-reveal">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">Features</span>
+                    <h3>Was das Theme mitbringt</h3>
+                </div>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <i class="bi bi-moon-stars-fill"></i>
+                    <strong>Dark Dashboard</strong>
+                    <p>Komplette Dark-UI mit Glasflächen, Hover-Shadows und animierten Farbverläufen.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="bi bi-bar-chart-fill"></i>
+                    <strong>Live Stats</strong>
+                    <p>Online-Zahlen, News, Gruppen und Wallet-Elemente direkt in der Startansicht.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <strong>Schneller Zugriff</strong>
+                    <p>Direkter Login, klare Navigation und schnelle Sprünge zu Shop, Help und Hotel.</p>
+                </div>
+            </div>
+        </article>
+
+        <article class="dashboard-card dashboard-reveal">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">Community</span>
+                    <h3>{{locale.latest_news}}</h3>
+                </div>
+            </div>
+            <div class="news-grid compact-news-grid">
+                {% for item in news|slice(0, 3) %}
+                <a href="/article/{{item.id}}-{{item.slug}}" class="news-card compact">
+                    <div class="news-cover" style="background-image:url('{{item.header}}');"></div>
+                    <div class="news-body">
+                        <div class="news-meta">
+                            <span>{{item.player.username}}</span>
+                            <span>{{item.timestamp|date("d.m H:i")}}</span>
+                        </div>
+                        <h4>{{item.title}}</h4>
+                        <p>{{item.short_story}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </article>
+    </section>
+</div>
+{% endif %}
+{% endblock %}
