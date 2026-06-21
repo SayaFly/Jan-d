@@ -1,8 +1,0 @@
-{% extends "base.html" %} 
-{% block body %}
-{% if not player %}
-    {% include 'Auth/auth.html' %}
-{%  else %}
-    {% include 'Home/main.html' %}
-{% endif %}
-{% endblock %}
