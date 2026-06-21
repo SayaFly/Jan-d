@@ -129,6 +129,8 @@
     </div>
     {% endif %}
 
+    {% set dashboard_page_body %}{% block body %}{% endblock %}{% endset %}
+
     {% if player %}
     <div id="hotel-dialog" class="payment-popup zoom-anim-dialog mfp-hide dashboard-popup">
         <h3 class="mb-3">{{site.sitename}} starten</h3>
@@ -203,7 +205,7 @@
             </header>
 
             <section class="page-container" data-page="{% if page is empty %}lost{% else %}{{page}}{% endif %}">
-                {% block body %}{% endblock %}
+                {{dashboard_page_body|raw}}
             </section>
 
             <footer class="dashboard-footer">
@@ -233,7 +235,7 @@
         </header>
 
         <section class="page-container" data-page="{% if page is empty %}lost{% else %}{{page}}{% endif %}">
-            {% block body %}{% endblock %}
+            {{dashboard_page_body|raw}}
         </section>
 
         <footer class="dashboard-footer guest-footer">
