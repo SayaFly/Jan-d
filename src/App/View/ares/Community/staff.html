@@ -1,0 +1,44 @@
+{% extends "base.html" %} 
+{% block body %}
+<div id="staff" class="page-staff animate__animated animate__fadeIn" style="display: flex;">
+<div class="d-flex" justifycontent="center" alignitems="center" width="100">
+   <div class="d-flex" flexdirection="column" width="responsive" style="gap: 35px;">
+      <div class="page-header d-flex" alignitems="center">
+         <div class="page-icon d-flex" justifycontent="center" alignitems="center">
+            <i class="icon --home"></i>
+         </div>
+         <div class="d-flex" flexdirection="column">
+            <span class="page-title" weight="500">{{site.shortname}} {% if action == "team" %}Teams{% else %}Staff{% endif %}</span>
+            <p class="page-description">{{locale.desc}}</p>
+         </div>
+      </div>
+      <div class="section-item" style="margin-top: -25px">
+         {% for employee in data %}
+         {% if employee.users is not empty %}
+         <div class="section-item" style="margin-bottom: 15px;">
+            <div class="section-header d-flex" alignitems="center">
+               <div class="d-flex" flexdirection="column">
+                  <span class="section-title" weight="500">{{employee.rank_name}}</span>
+                  {% if action == "team" %}<span class="section-title">{{employee.rank_description}}</span>{% endif %}
+               </div>
+            </div>
+            <div class="section-body">
+               <div class="staffs-content d-flex" flexwrap="wrap">
+                  {% for user in employee.users %}
+                  <a class="staff-item status-offline d-flex" alignitems="center">
+                     <div class="user-figure" style="background-image: url({{site.fpath}}?figure={{user.look}}&amp;direction=2&amp;head_direction=3&amp;gesture=eyb&amp;size=l);"></div>
+                     <div class="d-flex" flexdirection="column">
+                        <span class="username" weight="600">{{user.username}}</span>
+                        <span class="motto" weight="300">{{user.motto}}</span>
+                     </div>
+                  </a>
+                  {% endfor %}
+               </div>
+            </div>
+         </div>
+         {% endif %}
+         {% endfor %}
+      </div>
+   </div>
+</div>
+{% endblock %}

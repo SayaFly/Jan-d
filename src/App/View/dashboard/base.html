@@ -1,0 +1,293 @@
+{% extends "permissions.html" %}{% set set_permission = 'homepage' %}{% block base %}{% if load is not defined %}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="follow, index">
+    <link rel="shortcut icon" href="/assets/theme/default/images/favicon.ico" type="image/x-icon">
+    <title>{{title}} - {{site.sitename}}</title>
+    <meta name="description" content="Dark dashboard theme for {{site.sitename}} with animated login, community stats and modern hotel navigation.">
+    <meta property="og:title" content="{{site.sitename}}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{site.domain}}">
+    <meta property="og:image" content="/assets/theme/default/images/summary-picture.png">
+    <meta property="og:description" content="Dark dashboard experience for {{site.sitename}}.">
+    <meta property="og:site_name" content="{{site.sitename}}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/assets/theme/default/css/bbeditor.css" type="text/css" />
+    <link rel="stylesheet" href="/assets/theme/default/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/theme/default/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/theme/default/css/selectric.css">
+    <link rel="stylesheet" href="/assets/theme/dashboard/css/web.dark.css?v={{cache_timestamp}}">
+    <link rel="stylesheet" href="/assets/theme/dashboard/css/web.responsive.css?v={{cache_timestamp}}">
+
+    <script src="/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="/assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script>
+    var Site = {
+        name: "{{site.sitename}}",
+        url: "{{site.domain}}",
+        game_url: "{{site.cpath}}",
+        figure_url: "{{site.fpath}}",
+        dashboard_theme: true
+    }
+
+    {% if player is empty %}
+    var User = {
+        id: 0,
+        username: "",
+        online: 0,
+        is_logged: false,
+        is_staff: false
+    }
+    {% else %}
+    var Client = {
+        client_radio: "{{client.client_radio}}",
+        nitro_path: "{{client.nitro_path}}"
+    }
+    var User = {
+        id: {{player.id}},
+        username: "{{player.username}}",
+        is_logged: true,
+        ticket: "{{player.auth_ticket}}",
+        is_staff: {% if player.rank >= 3 %}true{% else %}false{% endif %}
+    };
+    {% endif %}
+
+    var Configuration = {
+        {% if publickey is not empty %}recaptcha_public: "{{publickey}}",{% endif %}
+        revision: "{{revision}}2213",
+        cache: "{{cache_timestamp}}",
+        findretros: {% if findretros %}true{% else %}false{% endif %}
+    }
+    </script>
+</head>
+<body class="dashboard-theme {% if player %}is-authenticated{% else %}is-guest{% endif %}">
+    <noscript>
+        <style>.loading-container { display:none; }</style>
+    </noscript>
+
+    <div class="loading-container">
+        <div id="loading-background"></div>
+        <div class="loading-content">
+            <div class="c100 center">
+                <span></span>
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+            <div class="loading-bodytext"></div>
+        </div>
+    </div>
+
+    <div class="page-loading"></div>
+    <div class="notifications-container"></div>
+
+    <div class="cookies-accept-container">
+        <div class="close-container">&times;</div>
+        {{site.sitename}} {{locale_base.cookies}}
+        <a href="/help" target="_blank">{{locale_base.read_more}}</a>
+    </div>
+
+    <div id="about-dialog" class="login-popup zoom-anim-dialog mfp-hide dashboard-popup">
+        <h3 class="mb-3">{{site.sitename}}</h3>
+        <p class="text-secondary mb-2">{{locale_base.thanks_for_playing}} {{site.shortname}}!</p>
+        <p class="mb-0">{{site.shortname}} {{locale_base.made_with_love}} ♥</p>
+    </div>
+
+    {% if player is empty %}
+    <div id="login-dialog" class="login-popup zoom-anim-dialog mfp-hide dashboard-popup">
+        <div class="login-form">
+            <h3 class="mb-3">{{locale_base.header_login}}</h3>
+            <p class="text-secondary mb-4">Melde dich an und spring direkt in dein Dashboard.</p>
+            <div class="mb-3">
+                <input type="text" name="username" class="form-control form-control-lg rounded-input" id="login-username-input-target" placeholder="{{site.shortname}}{{locale_base.login_name}}..." required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control form-control-lg rounded-input" id="login-password-input-target" placeholder="{{locale_base.login_password}}..." autocomplete="off" required>
+            </div>
+            <div class="d-flex justify-content-between align-items-center gap-3 mb-3 small">
+                <label class="form-check mb-0 text-secondary">
+                    <input class="form-check-input" type="checkbox" name="remember_me">
+                    <span class="form-check-label">Login merken</span>
+                </label>
+                <a href="/password/claim" class="text-decoration-none" data-close-popup="true">{{locale_base.login_lost_password}}</a>
+            </div>
+            <input type="hidden" name="csrftoken" value="{{csrf_token}}" />
+            <button type="submit" class="btn btn-primary w-100" id="login-request">{{locale_base.header_login}}</button>
+        </div>
+    </div>
+    {% endif %}
+
+    {% set dashboard_page_body %}{% block body %}{% endblock %}{% endset %}
+
+    {% if player %}
+    <div id="hotel-dialog" class="payment-popup zoom-anim-dialog mfp-hide dashboard-popup">
+        <h3 class="mb-3">{{site.sitename}} starten</h3>
+        <div class="d-grid gap-3">
+            {% for name,nitro in client.nitro %}
+            <a href="/hotel" data-link="{{name}}" class="btn btn-success btn-lg hotel-button">{{nitro}}</a>
+            {% endfor %}
+            {% if client.flash.enabled %}
+            <a href="/hotel" data-link="{{site.path}}/flash" class="btn btn-outline-light hotel-button">{{locale_base.hotel_selector_go_flash}}</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="dashboard-background">
+        <span class="glow glow-1"></span>
+        <span class="glow glow-2"></span>
+        <span class="grid"></span>
+    </div>
+
+    {% if player %}
+    <div class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+            <div>
+                <a href="/home" class="brand-mark text-decoration-none">
+                    <span class="brand-icon"><i class="bi bi-stars"></i></span>
+                    <div>
+                        <strong>{{site.shortname}}</strong>
+                        <small>{{site.sitename}}</small>
+                    </div>
+                </a>
+
+                <div class="sidebar-user card-glass">
+                    <img src="{{site.fpath}}?figure={{player.look}}&gesture=sml" alt="{{player.username}}" class="sidebar-avatar pixelated">
+                    <div>
+                        <div class="sidebar-username">{{player.username}}</div>
+                        <div class="sidebar-motto">{{player.motto}}</div>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a href="/home" class="{% if 'home' in page %}active{% endif %}"><i class="bi bi-grid-1x2-fill"></i><span>{{locale_base.nav_home}}</span></a>
+                    <a href="/articles" class="{% if 'community' in page %}active{% endif %}"><i class="bi bi-megaphone-fill"></i><span>{{locale_base.nav_community}}</span></a>
+                    <a href="/shop" class="{% if 'shop' in page %}active{% endif %}"><i class="bi bi-bag-fill"></i><span>{{locale_base.nav_shop}}</span></a>
+                    <a href="/games/ranking" class="{% if 'games' in page %}active{% endif %}"><i class="bi bi-trophy-fill"></i><span>{{locale_base.nav_highscores}}</span></a>
+                    <a href="/guilds" class="{% if 'forum' in page %}active{% endif %}"><i class="bi bi-people-fill"></i><span>{{locale_base.nav_forum}}</span></a>
+                    <a href="/help" class="{% if 'help' in page %}active{% endif %}"><i class="bi bi-life-preserver"></i><span>{{locale_base.nav_helptool}}</span></a>
+                    <a href="/settings" class="{% if 'settings' in page %}active{% endif %}"><i class="bi bi-sliders"></i><span>{{locale_base.user_settings}}</span></a>
+                    {% if 'housekeeping' in permissions %}
+                    <a href="/housekeeping" target="_blank"><i class="bi bi-shield-lock-fill"></i><span>{{locale_base.nav_housekeeping}}</span></a>
+                    {% endif %}
+                </nav>
+            </div>
+
+            <div class="sidebar-footer card-glass">
+                <div class="small text-secondary mb-2">{{online_count}} {{site.sitename}}'s online</div>
+                <button class="btn btn-primary w-100 hotel-dialog-button">{{locale_base.header_to}} {{site.sitename}}</button>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-topbar">
+                <div>
+                    <div class="eyebrow">{{site.sitename}} Dashboard</div>
+                    <h1>{{title}}</h1>
+                </div>
+                <div class="topbar-actions">
+                    <div class="status-pill"><i class="bi bi-broadcast-pin"></i><span class="counter" data-count="{{online_count}}">{{online_count}}</span> online</div>
+                    <a href="/profile/{{player.username}}" class="status-pill status-link"><i class="bi bi-person-badge"></i>{{player.username}}</a>
+                    <button class="status-pill status-link hotel-dialog-button" type="button"><i class="bi bi-controller"></i>{{locale_base.user_to}} {{site.shortname}}</button>
+                </div>
+            </header>
+
+            <section class="page-container" data-page="{% if page is empty %}lost{% else %}{{page}}{% endif %}">
+                {{dashboard_page_body|raw}}
+            </section>
+
+            <footer class="dashboard-footer">
+                <span>&copy; 2019 {{site.domain}}</span>
+                <div class="footer-links">
+                    <a href="/help">{{locale_base.footer_helptool}}</a>
+                    <a href="#" class="about-dialog-button">Cosmic</a>
+                    <a href="/logout">{{locale_base.user_logout}}</a>
+                </div>
+            </footer>
+        </main>
+    </div>
+    {% else %}
+    <div class="guest-shell">
+        <header class="guest-topbar">
+            <a href="/home" class="brand-mark text-decoration-none">
+                <span class="brand-icon"><i class="bi bi-stars"></i></span>
+                <div>
+                    <strong>{{site.shortname}}</strong>
+                    <small>{{site.sitename}}</small>
+                </div>
+            </a>
+            <div class="guest-actions">
+                <button class="btn btn-outline-light login-dialog-button">{{locale_base.header_login}}</button>
+                <a href="/registration" class="btn btn-primary">{{locale_base.header_register}}</a>
+            </div>
+        </header>
+
+        <section class="page-container" data-page="{% if page is empty %}lost{% else %}{{page}}{% endif %}">
+            {{dashboard_page_body|raw}}
+        </section>
+
+        <footer class="dashboard-footer guest-footer">
+            <span>&copy; 2019 {{site.domain}}</span>
+            <div class="footer-links">
+                <a href="/help">{{locale_base.footer_helptool}}</a>
+                <a href="#" class="about-dialog-button">Cosmic</a>
+            </div>
+        </footer>
+    </div>
+    {% endif %}
+
+    {% if player %}
+    <div id="hotel-container">
+        <div class="client-buttons">
+            <button class="client-close rounded-button blue plain">
+                <i class="client-icon fa fa-arrow-left" aria-hidden="true"></i>
+                <span class="client-close-expand"><span>Web</span></span>
+            </button>
+            <button class="client-fullscreen rounded-button blue plain">
+                <i class="client-icon client-fullscreen-icon"></i>
+                <i class="client-icon client-fullscreen-icon-back hidden"></i>
+            </button>
+            <button class="client-count rounded-button blue plain">
+                {% if 'housekeeping' in permissions %}<a href="/housekeeping" target="_blank" style="color:#fff;text-decoration:none;"><i class="fa fa-user"></i> <b id="count">{{online_count}}</b></a>{% else %}<i class="fa fa-user"></i> <b id="count">{{online_count}}</b>{% endif %}
+            </button>
+            <button class="client-radio rounded-button blue plain">
+                <audio controls id="stream" style="display:none"><source type="audio/mpeg"></audio>
+                <i class="fa fa-play"></i>
+                <i class="fa fa-pause" style="display:none"></i>
+                <i class="fa fa-volume-down"></i>
+                <i class="fa fa-volume-up"></i>
+            </button>
+        </div>
+    </div>
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/assets/js/js.cookie.js"></script>
+    <script src="/assets/js/jquery.history.js"></script>
+    <script src="/assets/js/jquery.fullscreen.min.js"></script>
+    <script src="/assets/js/jquery.magnific-popup.js"></script>
+    <script src="/assets/js/selectric.js?v=34212"></script>
+    <script src="/assets/js/functions.js"></script>
+    <script src="/assets/js/web/loading.js?v={{cache_timestamp}}"></script>
+    <script src="/assets/js/pagination.js"></script>
+    <script src="/assets/js/jquery.wysibb.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id={{paypal_client_id}}&currency={{paypal_currency}}&disable-funding=credit,card"></script>
+    <script src="/assets/theme/dashboard/js/theme.js?v={{cache_timestamp}}"></script>
+</body>
+</html>
+{% else %}
+{{ block('body') }}
+{% endif %}{% endblock %}
