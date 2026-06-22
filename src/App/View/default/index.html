@@ -237,9 +237,6 @@
 
   
 <script>
- $("#login-now").unbind().click(function () {
-
- });
  $(".login-dialog-button").unbind().click(function () {
       $.magnificPopup.open({
           items: {
@@ -248,32 +245,35 @@
           },
           callbacks: {
               open: function () {
-                  $(".rounded-input").unbind().keypress(function (e) {
-                      if (e.which == 13 || e.type === 'click') {
-                        
-                          var verification_data = {
-                              username: $(".login-form [name=username]").val(),
-                              password: $(".login-form [name=password]").val(),
-                              csrftoken: $(".login-form [name=csrftoken]").val(),
-                          };
-                          Web.ajax_manager.post("/auth/login/request", verification_data, function(result) {
-
-                              if(result.status == "pincode_required")
+                  function doLogin() {
+                      var verification_data = {
+                          username: $(".login-form [name=username]").val(),
+                          password: $(".login-form [name=password]").val(),
+                          csrftoken: $(".login-form [name=csrftoken]").val(),
+                      };
+                      Web.ajax_manager.post("/auth/login/request", verification_data, function(result) {
+                          if(result.status == "pincode_required")
+                          {
+                              setTimeout(function(){ 
+                              Web.dialog_manager.create("confirm", Locale.web_fill_pincode, Locale.web_twostep, null, "pincode", function (result)
                               {
-                                  setTimeout(function(){ 
-                                  Web.dialog_manager.create("confirm", Locale.web_fill_pincode, Locale.web_twostep, null, "pincode", function (result)
-                                  {
-                                      verification_data.pincode = result.toString();
-                                      Web.ajax_manager.post("/auth/login/request", verification_data);
+                                  verification_data.pincode = result.toString();
+                                  Web.ajax_manager.post("/auth/login/request", verification_data);
+                                  $.magnificPopup.close();
+                              });
+                              }, 500);
+                          }
+                      });
+                      $.magnificPopup.close();
+                  }
 
-                                      $.magnificPopup.close();
-                                  });
-                                  }, 500);
-                              }
-                          });
-                          $.magnificPopup.close();
-                
+                  $(".rounded-input").unbind().keypress(function (e) {
+                      if (e.which == 13) {
+                          doLogin();
                       }
+                  });
+                  $("#login-now").unbind().click(function () {
+                      doLogin();
                   });
               }
           },
