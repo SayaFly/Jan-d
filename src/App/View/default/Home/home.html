@@ -48,12 +48,12 @@
                                 <div style="color: #E2AE1D;">
                                     {{player.credits}}
                                 </div>
-                              
+
                                 {% for value in currencys %}
                                 <div class="icons" style="background: url(/assets/theme/default/images/hotel/purses/{{value.type}}-icon.png) no-repeat center center;"></div>
                                 <div style="color: #BA7CC2;">
                                    {{value.amount}}
-                                </div>             
+                                </div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -67,13 +67,13 @@
                     <aside class="default-section">
                         <div class="aside-title-content">{{locale.popular_rooms}}</div>
                         <div class="aside-desc-content">{{locale.popular_rooms_label}}</div>
-                      
+
                         {% if rooms is empty %}
                             <div class="aside-content">
                                 {{locale.popular_no_rooms}}
                             </div>
                         {% endif %}
-                      
+
                         {% if rooms is not empty %}
                         <div class="aside-content">
                             <table class="rooms table table-striped">
@@ -125,7 +125,7 @@
                     <div class="right-side">
                         <article class="default-section">
                             <div class="aside-title-content">{{locale.latest_news}}</div>
-                            <div class="aside-desc-content">{{locale.latest_facts}}</div>  
+                            <div class="aside-desc-content">{{locale.latest_facts}}</div>
                             <div class="aside-content">
                                 <div class="related-articles-container">
                                     {% for news in news %}
@@ -141,7 +141,7 @@
                             </div>
                         </article>
                     </div>
-                  
+
                     <div class="right-side" style="margin-bottom: 7px;">
                         <aside class="default-section">
                             <div class="aside-title-content">{{locale.popular_groups}}</div>
@@ -175,7 +175,6 @@
                                 </div>
                             </aside>
                         {% endif %}
-
                         <div class="friends-container" style="display: block !important">
                             <div class="list-row">
                                 <ul>
