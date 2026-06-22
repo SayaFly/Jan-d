@@ -1,0 +1,77 @@
+{% extends "base.html" %} 
+{% block body %}
+<div id="ticket" class="page-help animate__animated animate__fadeIn" style="display: flex;">
+   <div class="d-flex" justifycontent="center" alignitems="center" width="100">
+      <div id="ticket-selector" class="ticket-selector modal">
+         <div class="modal-btn-select-avatar modal-overlay"></div>
+         <div class="modal-content modal-transition">
+            <div class="modal-header">
+               <span class="modal-title">{{locale.open_ticket}}</span>
+               <button onclick="close()" class="modal-btn modal-close">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                     <path d="M7.496 7.495a.6.6 0 0 1 .85 0l3.174 3.176 3.176-3.176a.6.6 0 0 1 .85.85l-3.177 3.174 3.176 3.176a.603.603 0 0 1 0 .85.6.6 0 0 1-.85 0l-3.175-3.177-3.175 3.176a.6.6 0 1 1-.85-.85l3.177-3.175-3.176-3.175a.6.6 0 0 1 0-.85Z"></path>
+                  </svg>
+               </button>
+            </div>
+             <div class="modal-body">
+                <div class="input-group d-flex" flexdirection="column">
+                   <label for="title" class="title">{{locale.subject}}</label>
+                   <input autocomplete="off" id="title" name="subject" type="text" style="padding: 29px;">
+                </div>
+                <div class="input-group d-flex" flexdirection="column">
+                   <label for="status" class="title">{{locale.description}}</label>
+                   <textarea name="message" id="message" class="rounded-textarea blue-active" required></textarea>
+                </div>
+                <button formtarget="_blank" name="postHelp" class="btn-success openTicket">{{locale.open_ticket}}</button>
+             </div>
+         </div>
+      </div>
+      
+      <div id="help-side" width="responsive" style="display: flex;">
+         <div style="gap: 20px;" class="d-flex" flexdirection="column" alignitems="center">
+            <div class="help-box col-xxl d-flex" flexdirection="column">
+               <span class="title" weight="500">Eröffne ein Ticket</span>
+                {% if banned_reason %}
+                <div class="alert" style="color: #fff">
+                  Du wurdest gebannt!<Br />
+                  Grund: {{banned_reason.ban_reason}} <br />
+                  Dauer: {{ banned_reason.ban_expire|date }}   
+                </div>
+                {% else %}
+               <span class="text">Brauchen Sie Hilfe? Erstellen Sie jetzt ein neues Hilfeticket!</span>
+                {% endif %}
+               <div class="help-content d-flex" justifycontent="center" alignitems="center">
+                  <button class="modal-btn btn-success open-ticket" width="auto">{{locale.open_ticket}}</button>
+               </div>
+            </div>
+            {% if tickets is not empty %}
+            <div class="help-box col-xxl d-flex" flexdirection="column">
+               <span class="title" weight="500">Tickets</span>
+               <span class="text">Öffne ein neues Ticket hier</span>
+               <div class="help-content d-flex" justifycontent="center" alignitems="center">
+                  <table class="default-table" width="100" style="margin-top: 30px;">
+                     <tbody>
+                    {% for request in tickets %}
+                    <tr>
+                        <td><img src="{{site.fpath}}?figure={{player.look}}&gesture=sml&headonly=1" alt="{{user.username}}" class="pixelated"></td>
+                        <td><a href="/help/requests/{{request.id}}/view">{{request.subject}}</a></td>
+                        {% if request.status == "in_treatment" %}
+                            <td>{{locale.request_in_treatment}}</td>
+                        {% elseif request.status == "open" %}
+                            <td>{{locale.request_open}}</td>
+                        {% else %}
+                            <td>{{locale.request_closed}}</td>
+                        {% endif %}
+                        <td>{{request.timestamp|date("d-M H:i")}}</td>
+                    </tr>
+                    {% endfor %}   
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            {% endif %}
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

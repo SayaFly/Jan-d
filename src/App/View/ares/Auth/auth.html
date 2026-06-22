@@ -1,0 +1,348 @@
+<div id="ares-login-form">
+   <div class="page-login d-flex" justifycontent="center" alignitems="center">
+      <div class="login-wrapper d-flex animate__animated animate__fadeInUp" justifycontent="center" alignitems="center">
+         <div class="left-side" position="relative"></div>
+         <div class="right-side d-flex" flexdirection="column" justifycontent="center" alignitems="center" width="100">
+            <div class="logo-content d-flex" justifycontent="center" alignitems="center">
+               <img src="https://cdn.discordapp.com/attachments/954753188819533894/954808689141895178/tttt.gif" alt="Mezz V2 Logo" class="mezz-logo">
+               <div class="online-counter" position="relative" style="margin-top: 12px;">
+                  <p>
+                    <b weight="500">{{online_count}}</b> {{site.sitename}}'s Online
+                  </p>
+               </div>
+            </div>
+            <div position="relative" width="100">
+               <input  type="text" name="username" placeholder="Username" class="icon --username">
+               <div class="avatar" position="absolute" overflow="hidden">
+                  <div id="user-figure" class="avatar-figure"></div>
+               </div>
+            </div>
+            <input type="password" name="password" placeholder="Password" class="icon --password">
+            <button type="button" class="btn-default login-request" width="100">Einloggen</button>
+            <span class="divider">or</span>
+            <button type="button" class="btn-success registration-form-ares">Erstelle ein Account</button>
+         </div>
+      </div>
+   </div>
+</div>
+<div id="ares-registration-form" style="display: none;">
+   <div class="page-register d-flex" justifycontent="center" alignitems="center" position="relative" overflow="hidden">
+      <div class="d-flex animate__animated animate__fadeIn" flexdirection="column" justifycontent="center" alignitems="center" width="100" height="100">
+         <img src="https://cdn.discordapp.com/attachments/954753188819533894/954808689141895178/tttt.gif" alt="Mezz V2 Logo" class="mezz-logo">
+         <div class="form">
+            <div class="step-form-1 username" id="usernameForm" style="display:block">
+               <div class="register-content" flexdirection="column" alignitems="center">
+                  <div id="steps-form" class="wrappper d-flex" flexdirection="column" width="100">
+                     <div class="progress-container d-flex" justifycontent="center" alignitems="center" position="relative">
+                        <div class="step" position="relative">
+                           <i class="icon --username"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --email"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --password"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --birthdate"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --ready"></i>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="username" class="animate__animated animate__fadeIn register-content ares-registration-username-form" flexdirection="column" alignitems="center">
+                  <div id="steps-form" class="wrappper d-flex" flexdirection="column" width="100">
+                     <div class="item-content d-flex" flexdirection="column">
+                        <div class="input-group d-flex" flexdirection="column">
+                           <label for="username">Username</label>
+                           <input type="text" name="username" class="icon --username">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+              <div class="d-flex button-form" justifycontent="space-between" alignitems="center" width="100" style="margin-top: 20px;">
+                 <button type="button" class="btn-danger small back-login-form" width="auto">Zurück</button>
+                 <button type="button" class="btn-success small next" width="auto">Weiter</button>
+              </div>
+            </div>
+            <div class="step-form-2 email" id="emailForm">
+               <div class="register-content" flexdirection="column" alignitems="center">
+                  <div id="steps-form" class="wrappper d-flex" flexdirection="column" width="100">
+                     <div class="progress-container d-flex" justifycontent="center" alignitems="center" position="relative">
+                        <div class="step active" position="relative">
+                           <i class="icon --username"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --email"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --password"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --birthdate"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --ready"></i>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="email" class="animate__animated animate__fadeIn register-content ares-registration-email-form" flexdirection="column" alignitems="center">
+                  <div id="steps-form" class="wrappper d-flex" flexdirection="column" width="100">
+                     <div class="item-content d-flex" flexdirection="column">
+                        <div class="input-group d-flex" flexdirection="column">
+                           <label for="email">E-Mail Addresse</label>
+                           <input type="text"  name="email" class="icon --email">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            <div class="d-flex button-form" justifycontent="space-between" alignitems="center" width="100" style="margin-top: 20px;">
+               <button type="button" class="btn-danger small back" width="auto" id="prevBtn">Zurück</button>
+               <button type="button" class="btn-success small next" width="auto" id="nextBtn" data-step="">Weiter</button>
+            </div>
+            </div>
+            <div class="step-form-3 password password_repeat" id="passwordForm">
+               <div class="register-content" flexdirection="column" alignitems="center">
+                  <div id="steps-form" class="wrappper d-flex" flexdirection="column" width="100">
+                     <div class="progress-container d-flex" justifycontent="center" alignitems="center" position="relative">
+                        <div class="step active" position="relative">
+                           <i class="icon --username"></i>
+                        </div>
+                        <div class="step active" position="relative">
+                           <i class="icon --email"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --password"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --birthdate"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --ready"></i>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="password" class="animate__animated animate__fadeIn register-content ares-registration-password-form" flexdirection="column" alignitems="center">
+                  <div id="steps-form" class="wrappper d-flex" flexdirection="column" width="100">
+                     <div class="item-content d-flex" flexdirection="column">
+                        <div class="input-group d-flex" flexdirection="column">
+                           <label for="password">Passwort</label>
+                           <input type="password" name="password" class="icon --password">
+                        </div>
+                        <div class="input-group d-flex" flexdirection="column">
+                           <label for="repeat_password">Passwort wiederholen</label>
+                           <input type="password" name="password_repeat" class="icon --password">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            <div class="d-flex button-form" justifycontent="space-between" alignitems="center" width="100" style="margin-top: 20px;">
+               <button type="button" class="btn-danger small back" width="auto" id="prevBtn">Zurück</button>
+               <button type="button" class="btn-success small next" width="auto" id="nextBtn" data-step="">Weiter</button>
+            </div>
+            </div>
+            <div class="step-form-4 birthdate_day birthdate_month birthdate_year" id="birthdayForm">
+               <div class="register-content" flexdirection="column" alignitems="center">
+                  <div id="steps-form" class="wrappper d-flex" flexdirection="column" width="100">
+                     <div class="progress-container d-flex" justifycontent="center" alignitems="center" position="relative">
+                        <div class="step active" position="relative">
+                           <i class="icon --username"></i>
+                        </div>
+                        <div class="step active" position="relative">
+                           <i class="icon --email"></i>
+                        </div>
+                        <div class="step active" position="relative">
+                           <i class="icon --password"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --birthdate"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --ready"></i>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="birthdate" class="animate__animated animate__fadeIn register-content ares-registration-birthday-form" flexdirection="column" alignitems="center">
+                  <div id="steps-form" class="wrappper d-flex" flexdirection="column" width="100">
+                     <div class="item-content d-flex" flexdirection="column">
+                        <div class="input-group">
+                           <label for="day">Geburtsdatum</label>
+                        </div>
+                        <div class="input-group d-flex" flexdirection="row" justifycontent="space-between" style="gap: 20px;">
+                           <select name="birthdate_day">
+                              <option value="0">Tag</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                              <option value="13">13</option>
+                              <option value="14">14</option>
+                              <option value="15">15</option>
+                              <option value="16">16</option>
+                              <option value="17">17</option>
+                              <option value="18">18</option>
+                              <option value="19">19</option>
+                              <option value="20">20</option>
+                              <option value="21">21</option>
+                              <option value="22">22</option>
+                              <option value="23">23</option>
+                              <option value="24">24</option>
+                              <option value="25">25</option>
+                              <option value="26">26</option>
+                              <option value="27">27</option>
+                              <option value="28">28</option>
+                              <option value="29">29</option>
+                              <option value="30">30</option>
+                              <option value="31">31</option>
+                           </select>
+                           <select name="birthdate_month">
+                              <option value="0">Monat</option>
+                              <option value="1">Januar</option>
+                              <option value="2">Februar</option>
+                              <option value="3">März</option>
+                              <option value="4">April</option>
+                              <option value="5">Mai</option>
+                              <option value="6">Juni</option>
+                              <option value="7">Juli</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">Oktober</option>
+                              <option value="11">November</option>
+                              <option value="12">Dezember</option>
+                           </select>
+                           <select name="birthdate_year">
+                              <option value="2022">Jahr</option>
+                              <option value="1970">1970</option>
+                              <option value="1971">1971</option>
+                              <option value="1972">1972</option>
+                              <option value="1973">1973</option>
+                              <option value="1974">1974</option>
+                              <option value="1975">1975</option>
+                              <option value="1976">1976</option>
+                              <option value="1977">1977</option>
+                              <option value="1978">1978</option>
+                              <option value="1979">1979</option>
+                              <option value="1980">1980</option>
+                              <option value="1981">1981</option>
+                              <option value="1982">1982</option>
+                              <option value="1983">1983</option>
+                              <option value="1984">1984</option>
+                              <option value="1985">1985</option>
+                              <option value="1986">1986</option>
+                              <option value="1987">1987</option>
+                              <option value="1988">1988</option>
+                              <option value="1989">1989</option>
+                              <option value="1990">1990</option>
+                              <option value="1991">1991</option>
+                              <option value="1992">1992</option>
+                              <option value="1993">1993</option>
+                              <option value="1994">1994</option>
+                              <option value="1995">1995</option>
+                              <option value="1996">1996</option>
+                              <option value="1997">1997</option>
+                              <option value="1998">1998</option>
+                              <option value="1999">1999</option>
+                              <option value="2000">2000</option>
+                              <option value="2001">2001</option>
+                              <option value="2002">2002</option>
+                              <option value="2003">2003</option>
+                              <option value="2004">2004</option>
+                              <option value="2005">2005</option>
+                              <option value="2006">2006</option>
+                              <option value="2007">2007</option>
+                              <option value="2008">2008</option>
+                              <option value="2009">2009</option>
+                              <option value="2010">2010</option>
+                              <option value="2011">2011</option>
+                              <option value="2012">2012</option>
+                              <option value="2013">2013</option>
+                              <option value="2014">2014</option>
+                              <option value="2015">2015</option>
+                              <option value="2016">2016</option>
+                              <option value="2017">2017</option>
+                              <option value="2018">2018</option>
+                              <option value="2019">2019</option>
+                              <option value="2020">2020</option>
+                              <option value="2021">2021</option>
+                              <option value="2022">2022</option>
+                           </select>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+              <div class="d-flex button-form" justifycontent="space-between" alignitems="center" width="100" style="margin-top: 20px;">
+                 <button type="button" class="btn-danger small back" width="auto" id="prevBtn">Zurück</button>
+                 <button type="button" class="btn-success small next" width="auto" id="nextBtn" data-step="">Weiter</button>
+              </div>
+            </div>
+            <div class="step-form-5 gender figure" id="createForm">
+               <div class="register-content" flexdirection="column" alignitems="center">
+                  <div id="steps-form" class="wrappper d-flex" flexdirection="column" width="100">
+                     <div class="progress-container d-flex" justifycontent="center" alignitems="center" position="relative">
+                        <div class="step active" position="relative">
+                           <i class="icon --username"></i>
+                        </div>
+                        <div class="step active" position="relative">
+                           <i class="icon --email"></i>
+                        </div>
+                        <div class="step active" position="relative">
+                           <i class="icon --password"></i>
+                        </div>
+                        <div class="step active" position="relative">
+                           <i class="icon --birthdate"></i>
+                        </div>
+                        <div class="step" position="relative">
+                           <i class="icon --ready"></i>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="create" class="animate__animated animate__fadeIn register-content ares-registration-create-form" flexdirection="column" alignitems="center">
+                  <div class="item-content d-flex" flexdirection="column">
+                     <div class="d-flex" justifycontent="center" style="margin: 30px 0; gap: 130px;">
+                        <div class="gender-content">
+                           <input type="radio" name="gender" value="male" id="male" class="gender d-none">
+                           <label for="male" class="d-flex avatar-figure" justifycontent="center" alignitms="center">
+                              <div class="spotlight" position="absolute"></div>
+                              <img src="{{site.fpath}}?figure=hr-100-39.hd-180-1.ch-210-66.lg-270-1338.sh-290-140&amp;direction=4&amp;head_direction=4&amp;action=&amp;gesture=nrm&amp;size=l" alt="Avatar" class="look">
+                           </label>
+                        </div>
+                        <div class="gender-content">
+                           <input type="radio" name="gender" value="female" id="female" class="gender d-none">
+                           <label for="female" class="d-flex avatar-figure" justifycontent="center" alignitms="center">
+                              <div class="spotlight" position="absolute"></div>
+                              <img src="{{site.fpath}}?figure=hr-515-33.hd-600-1.ch-635-70.lg-716-66-62.sh-735-68&amp;direction=2&amp;head_direction=2&amp;action=&amp;gesture=nrm&amp;size=l" alt="" class="look">
+                           </label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            <div class="d-flex button-form" justifycontent="space-between" alignitems="center" width="100" style="margin-top: 20px;">
+               <button type="button" class="btn-danger small back" width="auto" id="prevBtn">Zurück</button>
+               <button type="button" class="btn-success small next" width="auto" id="nextBtn" data-step="">Weiter</button>
+            </div>
+            </div>
+         </div>
+      </div>
+      </form>
+      <div class="register-right-cover animate__animated animate__fadeIn" position="absolute"></div>
+   </div>
+</div>
+<style>
+.form div[class*="step-form-"] {
+  display: none;
+}
+</style>

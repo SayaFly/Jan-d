@@ -1,0 +1,156 @@
+{% block body %}
+   <div id="me" class="page-me animate__animated animate__fadeIn" style="display: flex;">
+      <div class="d-flex" justifycontent="center" alignitems="center" width="100">
+         <div class="d-flex" justifycontent="space-between" width="responsive">
+            <div class="left-side d-flex" flexdirection="column">
+               <div class="page-header d-flex" alignitems="center">
+                  <div class="page-icon d-flex" justifycontent="center" alignitems="center">
+                     <i class="icon --home"></i>
+                  </div>
+                  <div class="d-flex" flexdirection="column">
+                     <span class="page-title" weight="500">{{locale.latest_news}}</span>
+                     <p class="page-description">{{locale.latest_facts}}</p>
+                  </div>
+               </div>
+               {% for news in news|slice(0, 2) %}
+                <a href="/article/{{news.id}}-{{news.slug}}">
+               <div class="d-flex" flexwrap="wrap" style="gap: 20px;">
+                  <div class="article col-xl" style="padding: 0; height: 200px;">
+                     <div class="article-wrapper d-flex" justifycontent="space-between">
+                        <div class="details" position="relative">
+                           <div class="header d-flex" justifycontent="space-between" alignitems="center">
+                              <div class="author-content d-flex" alignitems="center">
+                                 <div class="background d-flex" justifycontent="center" alignitems="center">
+                                    <div class="head-figure" style="background-image: url({{site.fpath}}?figure={{news.player.look}}&amp;action=std&amp;direction=2&amp;head_direction=2&amp;img_format=undefined&amp;headonly=1&amp;size=b);"></div>
+                                 </div>
+                                 <span class="username">{{news.player.username}}</span>
+                              </div>
+                           </div>
+                           <span class="title" weight="500" texttransform="uppercase">{{news.title}}</span>
+                           <p class="short-text">{{news.short_story}}</p>
+                        </div>
+                        <div class="promo-image" style="height:200px;">
+                           <div class="image" style="background-image: url({{news.header}});"></div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="d-flex" flexwrap="wrap" style="width: 506px; gap: 20px;"></div>
+               </div>
+               </a>
+               {% endfor %}
+               <div class="page-header d-flex" alignitems="center">
+                  <div class="page-icon d-flex" justifycontent="center" alignitems="center">
+                     <i class="icon --rooms"></i>
+                  </div>
+                  <div class="d-flex" flexdirection="column">
+                     <span class="page-title" weight="500">{{locale.popular_rooms}}</span>
+                     <p class="page-description">{{locale.popular_rooms_label}}</p>
+                  </div>
+               </div>
+               <div id="rooms" class="page-rooms animate__animated animate__fadeIn" style="display: flex;">
+                  <div class="d-flex" justifycontent="center" alignitems="center" width="100" style="padding:20px">
+                     <div class="d-flex" flexdirection="column" width="responsive">
+                        <div class="rooms-content d-flex" flexdirection="column">
+                          {% if rooms is empty %}
+                                {{locale.popular_no_rooms}}
+                          {% endif %}
+                          {% for row in rooms|slice(0,3) %}
+                           <div class="room-item d-flex" alignitems="center">
+                              <div class="room-thumbnail-content">
+                                 <div class="room-thumbnail-image" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAABuCAIAAABJObGsAAAAA3NCSVQICAjb4U/gAAAAX3pUWHRSYXcgcHJvZmlsZSB0eXBlIEFQUDEAAAiZ40pPzUstykxWKCjKT8vMSeVSAANjEy4TSxNLo0QDAwMLAwgwNDAwNgSSRkC2OVQo0QAFmJibpQGhuVmymSmIzwUAT7oVaBst2IwAAAKBSURBVHic7dxNattQFIZhp3RXGXgJIVlmBwmh3YAH2VcHH5hDmjTx9Xt+bvK9I8sgkB6uhTgyuvnz+9fBEf3oPoCvkymxTIllSixTYpkSy5RYpsQyJZYpsUyJZUosU2KZEsuUWKbEMiWWKbFMiWVKLFNimRLLlFimxDIllimxTIn1s/sAVnp6fNaH+4e73iOJbUYpxOPx9nR6OR5vtTkEdBvKM2L8UptDQDegfBMxNgR0NOWHiLF20KGUFyHGGkHHUS4jxlpAB1EiiLFi0BGUOGKsDLSZMhUxVgDaRlmGGEsFbaBsQYwlgZZStiPGcNAiylGIMRA0nXIsYgwBTaTcAjGmgdPy7imU2yEiwZQLiFoIX8Ado1xGvH+4O0/FL9pR09+LdkwNoFz7OZ9OLwsX+FdLeNSKvoqy8pr4ppo2h4BeuyoLTuBDqSGgIyZD73WRTjvoUMplkUbQcZSIQgvoIEr8zItBp1Dm3SSWgX6vKXoqaCfl0+NzyxQ9CbSBsv0GMAm0lLIdMYaDFlGOQoyBoOmUYxFjEXS5RMotENX5UMdN0XdEPExblVsjTnni+J0RFUBpRHUt5bQHLO+ViqiAKfrwVVmAqLBVORC0DFHdXP/a5DjdGQJajKgASjUEtAVRYZSqEbQRUcGUqhi0HVGlUKoC0CGIKpFSJYGOQlTplAoEHYioiijVlaBjEVUppVoAHY6oGijVJ0G3QFRtlOo/oBshqmZK9S/oYStENYJSvfqnxkaIahClmvm2ls80jnLf/MomLFNimRLLlFimxDIllimxTIllSixTYpkSy5RYpsQyJZYpsUyJZUosU2KZEsuUWKbEMiWWKbFMiWVKLFNi/QXTE+WGg6hedQAAAABJRU5ErkJggg==)"></div>
+                              </div>
+                              <div class="d-flex" flexdirection="column" height="auto">
+                                 <span class="room-name" weight="500">{{row.name}}</span>
+                                 <a class="room-owner-content d-flex" alignitems="center">
+                                    <div class="figure d-flex" justifycontent="center" alignitems="center">
+                                       <div class="figure-image" style="background-image: url({{site.fpath}}?figure={{row.player.look}}&amp;action=std&amp;direction=2&amp;head_direction=2&amp;img_format=undefined&amp;gesture=sml&amp;headonly=1&amp;size=b);"></div>
+                                    </div>
+									<span class="room-owner-username">{{row.player.username}}</span>
+									<a href="{% if player.online %}/api/room/{{row.id}}{% else %}/hotel?room={{row.id}}{% endif %}" class="button"> Gehen Sie in den Raum von {{row.player.username}}</a>
+                                    </a>
+                              </div>
+                           </div>
+                            {% endfor %}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="right-side d-flex" flexdirection="column">
+               <div class="updates col-lg d-flex" flexdirection="column">
+                  <div class="page-header d-flex" alignitems="center">
+                     <div class="page-icon d-flex" justifycontent="center" alignitems="center">
+                        <i class="icon --cannon"></i>
+                     </div>
+                     <div class="d-flex" flexdirection="column">
+                        <span class="page-title" weight="500">{{locale.popular_groups}}</span>
+                        <p class="page-description">{{locale.popular_groups_label}}</p>
+                     </div>
+                  </div>
+                  {% if groups is empty %}
+                  <span style="color: #fff">{{locale.popular_no_groups}}</span>
+                  {% endif %}
+                  {% for row in groups|slice(0,4) %}
+                  <div class="update-item d-flex" alignitems="center">
+                     <img src="{{site.cpath}}/c_images/Badgeparts/generated/{{row.badge}}.png" style="
+    padding: 5px;
+    margin: 8px;
+">
+                     <div class="d-flex" flexdirection="column">
+                        <a class="developer-username">{{row.name}}</a>
+                        <div class="new-update">
+                           <p>{{row.description}}</p>
+                        </div>
+                     </div>
+                  </div>
+                  {% endfor %}
+               </div>
+               <div class="updates col-lg d-flex" flexdirection="column">
+                  <div class="page-header d-flex" alignitems="center">
+                     <div class="page-icon d-flex" justifycontent="center" alignitems="center">
+                        <i class="icon --heart"></i>
+                     </div>
+                     <div class="d-flex" flexdirection="column">
+                        <span class="page-title" weight="500">{{locale.user_of_the_week}}</span>
+                        <p class="page-description">{{locale.user_of_the_week_label}}</p>
+                     </div>
+                  </div>
+                  <div class="update-item d-flex" alignitems="center">
+                     <div class="developer-figure" style="background-image: url({{site.fpath}}?figure={{oftw.look}}&action=std&direction=2&head_direction=2&img_format=undefined&headonly=1&size=b)"></div>
+                     <div class="d-flex" flexdirection="column">
+                        <a href="/profile/{{oftw.username}}" class="developer-username">{{oftw.username}}</a>
+                        <div class="new-update">
+                           <p>{{oftw.motto}}</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="updates col-lg d-flex" flexdirection="column">
+                  <div class="page-header d-flex" alignitems="center">
+                     <div class="page-icon d-flex" justifycontent="center" alignitems="center">
+                        <i class="icon --community"></i>
+                     </div>
+                     <div class="d-flex" flexdirection="column">
+                        <span class="page-title" weight="500">{{locale.friends_online}}</span>
+                     </div>
+                  </div>
+                  {% if friends is empty %}
+                      <span style="color:#fff">Keine Freunde Aktuell Online!</span>
+                  {% endif %}
+                  {% for friend in friends|slice(0,4) %}
+                  <div class="update-item d-flex" alignitems="center">
+                     <div class="developer-figure" style="background-image: url({{site.fpath}}?figure={{friend.look}}&action=std&direction=2&head_direction=2&img_format=undefined&headonly=1&size=b)"></div>
+                     <div class="d-flex" flexdirection="column">
+                        <a href="/profile/{{friend.username}}" class="developer-username">{{friend.username}}</a>
+                        <div class="new-update">
+                           <p>{{friend.motto}}</p>
+                        </div>
+                     </div>
+                  </div>
+                  {% endfor %}
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}
