@@ -53,7 +53,118 @@ function WebInterface() {
         $(".hotelbtn").click(function() {
             $(this).addClass("activeHotel")
             $.magnificPopup.close();
-        }) 
+        });
+
+        /* ── Sidebar: login via inline form ── */
+        $(document).on("click", ".sidebar-login-btn", function () {
+            var username = $(".sidebar-login [name=sb_username]").val();
+            var password = $(".sidebar-login [name=sb_password]").val();
+
+            if (!username || !password) {
+                Web.notifications_manager.create("error", "Please fill in username and password.");
+                return;
+            }
+
+            Web.ajax_manager.post("/auth/login/request", {
+                username: username,
+                password: password
+            }, function (result) {
+                if (result.status === "pincode_required") {
+                    setTimeout(function () {
+                        Web.dialog_manager.create("confirm", Locale.web_fill_pincode, Locale.web_twostep, null, "pincode", function (res) {
+                            Web.ajax_manager.post("/auth/login/request", {
+                                username: username,
+                                password: password,
+                                pincode: res.toString()
+                            });
+                        });
+                    }, 500);
+                }
+            });
+        });
+
+        /* Allow Enter key in sidebar login inputs */
+        $(document).on("keypress", ".sidebar-login .sidebar-input", function (e) {
+            if (e.which === 13) {
+                $(".sidebar-login-btn").trigger("click");
+            }
+        });
+
+        /* ── Sidebar: toggle collapse ── */
+        $(document).on("click", "#sidebar-toggle", function () {
+            $("body").toggleClass("sidebar-collapsed");
+            Cookies.set("sidebar_collapsed", $("body").hasClass("sidebar-collapsed") ? "1" : "0", { expires: 365 });
+        });
+
+        /* Restore sidebar state */
+        if (Cookies.get("sidebar_collapsed") === "1") {
+            $("body").addClass("sidebar-collapsed");
+        }
+
+        /* ── Sidebar: ripple effect on nav items ── */
+        $(document).on("click", ".sidebar-nav-item", function (e) {
+            var $btn = $(this);
+            var offset = $btn.offset();
+            var x = e.pageX - offset.left;
+            var y = e.pageY - offset.top;
+            var size = Math.max($btn.outerWidth(), $btn.outerHeight());
+
+            var $ripple = $('<span class="ripple"></span>').css({
+                width: size,
+                height: size,
+                left: x - size / 2,
+                top: y - size / 2
+            });
+
+            $btn.append($ripple);
+            setTimeout(function () { $ripple.remove(); }, 600);
+        });
+
+        /* ── Particles ── */
+        if (typeof particlesJS !== "undefined" && document.getElementById("particles-js")) {
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": { "value": 55, "density": { "enable": true, "value_area": 900 } },
+                    "color": { "value": ["#7c5cff", "#21d4fd", "#ffffff"] },
+                    "shape": { "type": "circle" },
+                    "opacity": {
+                        "value": 0.38,
+                        "random": true,
+                        "anim": { "enable": true, "speed": 0.8, "opacity_min": 0.04, "sync": false }
+                    },
+                    "size": { "value": 2.2, "random": true },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 140,
+                        "color": "#7c5cff",
+                        "opacity": 0.12,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 1.4,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": { "enable": true, "mode": "grab" },
+                        "onclick": { "enable": true, "mode": "push" },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": { "distance": 160, "line_linked": { "opacity": 0.28 } },
+                        "push": { "particles_nb": 3 }
+                    }
+                },
+                "retina_detect": true
+            });
+        }
     }
   
     this.ares_theme = function () {
