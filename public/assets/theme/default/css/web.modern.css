@@ -61,6 +61,12 @@ body.default-theme-shell > * {
     z-index: 1;
 }
 
+/* Particles stays behind everything */
+body.default-theme-shell > #particles-js {
+    z-index: 0;
+    position: fixed;
+}
+
 a {
     color: #dbe7ff;
     transition: color 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
@@ -72,7 +78,6 @@ a:focus {
 }
 
 .header-container,
-.navigation-container,
 .footer-container,
 .default-section,
 .login-popup,
@@ -87,7 +92,6 @@ a:focus {
 }
 
 .header-container,
-.navigation-container,
 .footer-container,
 .page-container,
 .cookies-accept-container {
@@ -146,46 +150,7 @@ a:focus {
     color: var(--theme-muted);
 }
 
-.navigation-container {
-    margin-top: 18px;
-    padding: 0 1rem;
-    border-radius: 24px;
-}
-
-.navigation-container .navigation-menu {
-    align-items: center;
-    gap: 0.45rem;
-}
-
-.navigation-container .navigation-menu .navigation-item {
-    margin-right: 0;
-}
-
-.navigation-container .navigation-menu .navigation-item > a {
-    border-radius: 18px;
-    padding: 1rem 1.1rem;
-    color: var(--theme-text);
-}
-
-.navigation-container .navigation-menu .navigation-item:hover > a,
-.navigation-container .navigation-menu .navigation-item.selected > a,
-.navigation-container .navigation-menu .navigation-item.navigation-right-side-item > a {
-    background: rgba(124, 92, 255, 0.14);
-    box-shadow: 0 16px 34px rgba(124, 92, 255, 0.18);
-}
-
-.navigation-container .navigation-menu .navigation-submenu {
-    margin-top: 12px;
-    border-radius: 20px;
-    border: 1px solid var(--theme-border);
-    background: rgba(9, 14, 26, 0.98);
-    box-shadow: var(--theme-shadow);
-    overflow: hidden;
-}
-
-.navigation-container .navigation-menu .navigation-submenu .navigation-subitem a {
-    color: var(--theme-text);
-}
+/* Old horizontal nav styles removed — sidebar.css handles navigation now */
 
 .page-container {
     margin-top: 24px;

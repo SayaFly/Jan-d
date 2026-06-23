@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="/assets/theme/default/css/web.{% if player %}{{player.template}}{% else %}{% if template %}{{template}}{% else %}dark{% endif %}{% endif %}.css?v={{cache_timestamp}}">
     <link rel="stylesheet" href="/assets/theme/default/css/web.modern.css?v={{cache_timestamp}}">
     <link rel="stylesheet" href="/assets/theme/default/css/web.responsive.css">
+    <link rel="stylesheet" href="/assets/theme/default/css/sidebar.css?v={{cache_timestamp}}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
@@ -84,6 +85,7 @@
 </head>
 
 <body class="flex-container flex-direction-column default-theme-shell {% if player %}is-logged{% else %}is-guest{% endif %}" data-bs-theme="dark">
+    <div id="particles-js"></div>
     <noscript>
         <style>
             .loading-container {
@@ -168,6 +170,126 @@
     </div>
     {% endif %}
 
+    <!-- ======================== SIDEBAR ======================== -->
+    <aside class="sidebar-container navigation-container" id="sidebar">
+
+        <!-- Toggle button -->
+        <button class="sidebar-toggle" id="sidebar-toggle" title="Menu">
+            <span></span><span></span><span></span>
+        </button>
+
+        <!-- Logo -->
+        <div class="sidebar-logo">
+            <a href="/home">
+                <img src="https://habbofont.net/font/hma/{{site.shortname}}.gif" alt="{{site.shortname}}" style="margin-top:0;">
+            </a>
+        </div>
+
+        <!-- Online badge -->
+        <span class="sidebar-online-badge sidebar-text">{{online_count}} online</span>
+
+        <!-- User section (logged in) -->
+        {% if player %}
+        <div class="sidebar-avatar-wrap">
+            <div class="sidebar-avatar">
+                <img src="{{site.fpath}}?figure={{player.look}}&gesture=sml&headonly=1&size=b" alt="{{player.username}}" class="pixelated">
+            </div>
+            <div class="sidebar-user-info">
+                <span class="sidebar-username">{{player.username}}</span>
+                <span class="sidebar-motto">{{player.motto|slice(0,22)}}</span>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Login form (guests only) -->
+        {% if player is empty %}
+        <div class="sidebar-login">
+            <span class="sidebar-login-title">Login {{site.sitename}}</span>
+            <div class="sidebar-input-wrap">
+                <i class="sidebar-input-icon fa fa-user"></i>
+                <input type="text" name="sb_username" class="sidebar-input" placeholder="{{locale_base.login_name}}..." autocomplete="off">
+            </div>
+            <div class="sidebar-input-wrap">
+                <i class="sidebar-input-icon fa fa-lock"></i>
+                <input type="password" name="sb_password" class="sidebar-input" placeholder="{{locale_base.login_password}}..." autocomplete="off">
+            </div>
+            <button type="button" class="sidebar-login-btn">Login</button>
+            <a href="/registration" class="sidebar-register-link">{{locale_base.header_register}} →</a>
+        </div>
+        {% endif %}
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+            <span class="sidebar-section-title">Navigation</span>
+
+            <a href="/home" class="sidebar-nav-item navigation-item {% if "home" in page %}selected{% endif %}" data-category="home">
+                <i class="sidebar-icon icon-home"></i>
+                <span class="sidebar-text">{{locale_base.nav_home}}</span>
+            </a>
+
+            <a href="/articles" class="sidebar-nav-item navigation-item {% if "community" in page %}selected{% endif %}" data-category="community">
+                <i class="sidebar-icon icon-community"></i>
+                <span class="sidebar-text">{{locale_base.nav_community}}</span>
+            </a>
+
+            {% if player %}
+            <a href="/shop" class="sidebar-nav-item navigation-item {% if "shop" in page %}selected{% endif %}" data-category="shop">
+                <i class="sidebar-icon icon-shop"></i>
+                <span class="sidebar-text">{{locale_base.nav_shop}}</span>
+            </a>
+            {% endif %}
+
+            <a href="/games/ranking" class="sidebar-nav-item navigation-item {% if "games" in page %}selected{% endif %}" data-category="games">
+                <i class="sidebar-icon icon-highscores"></i>
+                <span class="sidebar-text">{{locale_base.nav_highscores}}</span>
+            </a>
+
+            <a href="/guilds" class="sidebar-nav-item navigation-item {% if "forum" in page %}selected{% endif %}" data-category="forum">
+                <i class="sidebar-icon icon-forum"></i>
+                <span class="sidebar-text">{{locale_base.nav_forum}}</span>
+            </a>
+
+            <a href="/help" class="sidebar-nav-item navigation-item {% if "help" in page %}selected{% endif %}" data-category="help">
+                <i class="sidebar-icon icon-help"></i>
+                <span class="sidebar-text">{{locale_base.nav_helptool}}</span>
+            </a>
+
+            {% if 'housekeeping' in permissions %}
+            <a href="/housekeeping" target="_blank" class="sidebar-nav-item navigation-item">
+                <i class="fa fa-cog" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"></i>
+                <span class="sidebar-text">{{locale_base.nav_housekeeping}}</span>
+            </a>
+            {% endif %}
+        </nav>
+
+        <!-- Bottom actions (logged in) -->
+        {% if player %}
+        <div class="sidebar-bottom">
+            <a href="/hotel" class="sidebar-nav-item hotel-button">
+                <i class="fa fa-gamepad" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;"></i>
+                <span class="sidebar-text">{{locale_base.header_to}} {{site.sitename}}</span>
+            </a>
+            <a href="/profile/{{player.username}}" class="sidebar-nav-item">
+                <i class="fa fa-user-circle-o" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;"></i>
+                <span class="sidebar-text">{{locale_base.user_profile}}</span>
+            </a>
+            <a href="/settings" class="sidebar-nav-item">
+                <i class="fa fa-cog" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;"></i>
+                <span class="sidebar-text">{{locale_base.user_settings}}</span>
+            </a>
+            <a href="/logout" target="_self" class="sidebar-nav-item sidebar-logout">
+                <i class="fa fa-sign-out" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;"></i>
+                <span class="sidebar-text">{{locale_base.user_logout}}</span>
+            </a>
+        </div>
+        {% endif %}
+
+    </aside>
+    <!-- ===================== /SIDEBAR ======================= -->
+
+    <!-- ==================== MAIN WRAPPER ==================== -->
+    <div class="main-wrapper">
+
     <header class="header-container pixelated is-small">
         <div class="header-content"> 
             <div class="logo"><a href="/home"><img src="https://habbofont.net/font/hma/{{site.shortname}}.gif"
@@ -191,77 +313,6 @@
         </div>
     </header>
 
-    <nav class="navigation-container">
-        <ul class="navigation-menu flex-container">
-            <li class="navigation-item {% if "home" in page %}selected {% endif %}" data-category="home"><a
-                    href="/home">{{locale_base.nav_home}}</a></li>
-            <li class="navigation-item has-items {% if "community" in page %}selected {% endif %}"
-                data-category="community">
-                <a href="/articles">{{locale_base.nav_community}}</a>
-                <ul class="navigation-submenu">
-                    <li class="navigation-subitem"><a href="/articles">{{locale_base.nav_news}}</a></li>
-                    <li class="navigation-subitem"><a href="/jobs">{{locale_base.nav_jobs}}</a></li>
-                    <li class="navigation-subitem"><a href="/community/photos">{{locale_base.nav_photos}}</a></li>
-                    <li class="navigation-subitem"><a href="/community/rares">{{locale_base.nav_rarevalue}}</a></li>
-                    <li class="navigation-subitem"><a href="/community/staff">{{site.shortname}} {{locale_base.nav_staff}}</a></li>
-                    <li class="navigation-subitem"><a href="/community/team">{{site.shortname}} {{locale_base.nav_team}}</a></li>
-                </ul>
-            </li>
-
-            {% if player %}
-            <li class="navigation-item has-items {% if "shop" in page %}selected {% endif %}" data-category="shop">
-                <a href="/shop">{{site.shortname}} {{locale_base.nav_shop}}</a>
-                <ul class="navigation-submenu">
-                    <li class="navigation-subitem"><a href="/shop">{{locale_base.nav_buy_points}}</a></li>
-                    <li class="navigation-subitem"><a href="/shop/club">{{locale_base.nav_buy_club}}</a></li>
-                    <li class="navigation-subitem"><a href="/shop/drawbadge">{{locale_base.nav_drawyourbadge}}</a></li>
-                    <li class="navigation-subitem"><a href="/settings/namechange">{{locale_base.nav_changename}}</a>
-                    </li>
-                </ul>
-            </li>
-            {% endif %}
-
-            <li class="navigation-item {% if "games" in page %}selected {% endif %}" data-category="games"><a
-                    href="/games/ranking">{{locale_base.nav_highscores}}</a></li>
-            <li class="navigation-item {% if "forum" in page %}selected {% endif %}" data-category="forum"><a
-                    href="/guilds">{{locale_base.nav_forum}}</a></li>
-
-            <li class="navigation-item has-items {% if "help" in page %}selected {% endif %}" data-category="help">
-                <a href="/help">{{locale_base.nav_helptool}}</a>
-                <ul class="navigation-submenu">
-                    <li class="navigation-subitem"><a href="/help">{{locale_base.nav_helptool}}</a></li>
-                    {% if player %}
-                    <li class="navigation-subitem"><a href="/help/requests/view">{{locale_base.nav_helptickets}}</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </li>
-
-            {% if 'housekeeping' in permissions %}
-            <li class="navigation-item">
-                <a href="/housekeeping" target="_blank">{{locale_base.nav_housekeeping}}</a>
-            </li>
-            {% endif %}
-
-            {% if player %}
-            <li class="navigation-item navigation-right-side-item has-items">
-                <a href="#">
-                    <div class="account-avatar"><img src="{{site.fpath}}?figure={{player.look}}&gesture=sml"
-                            alt="{{player.username}}" class="pixelated"></div>
-                    <span>{{player.username}}</span>
-                </a>
-                <ul class="navigation-submenu">
-                    <li class="navigation-subitem"><a href="/hotel">{{locale_base.user_to}} {{site.sitename}}</a></li>
-                    <li class="navigation-subitem"><a
-                            href="/profile/{{player.username}}">{{locale_base.user_profile}}</a></li>
-                    <li class="navigation-subitem"><a href="/settings">{{site.shortname}} ID
-                            {{locale_base.user_settings}}</a></li>
-                    <li class="navigation-subitem"><a href="/logout" target="_self">{{locale_base.user_logout}}</a></li>
-                </ul>
-            </li>
-            {% endif %}
-    </nav>
-
     <section class="page-container" data-page="{% if page is empty %}lost{% else %}{{page}}{% endif %}">
         {% block body %} {% endblock %}
     </section>
@@ -270,6 +321,9 @@
         <div class="footer-copyright">&copy; 2019 {{site.domain}} | <a href="/help/">{{locale_base.footer_helptool}}</a> | <a
                 href="#" class="about-dialog-button">Cosmic</a></div>
     </footer>
+
+    </div>
+    <!-- ================== /MAIN WRAPPER ==================== -->
 
     {% if player %}
     <div id="hotel-container">
@@ -314,6 +368,7 @@
     <script src="/assets//js/web/loading.js?v={{cache_timestamp}}"></script>
     <script src="/assets//js/pagination.js"></script>
     <script src="/assets//js/jquery.wysibb.js"></script>
+    <script src="/assets//js/particles.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id={{paypal_client_id}}&currency={{paypal_currency}}&disable-funding=credit,card"></script>
 
