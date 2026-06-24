@@ -27,6 +27,7 @@ body.default-theme-shell {
     font-family: "Poppins", "Segoe UI", sans-serif;
     position: relative;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 body.default-theme-shell::before,
@@ -121,6 +122,8 @@ a:focus {
 
 .header-container .logo img {
     filter: drop-shadow(0 18px 35px rgba(0, 0, 0, 0.4));
+    max-height: 96px;
+    width: auto;
 }
 
 .account-container {
@@ -156,6 +159,12 @@ a:focus {
     margin-top: 24px;
     margin-bottom: 24px;
     max-width: 1260px;
+    background:
+        linear-gradient(160deg, rgba(12, 18, 36, 0.95), rgba(6, 10, 22, 0.94)) !important;
+    border: 1px solid rgba(124, 92, 255, 0.14);
+    border-radius: 28px;
+    box-shadow: var(--theme-shadow);
+    padding: 1.35rem;
 }
 
 .page-container .page-content,
@@ -346,9 +355,10 @@ a:focus {
 .rounded-button.white,
 .btn-success,
 .btn-nav {
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--theme-text) !important;
-    border-color: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, rgba(82, 61, 199, 0.95), rgba(21, 108, 188, 0.95));
+    color: #ffffff !important;
+    border-color: rgba(154, 137, 255, 0.42);
+    box-shadow: 0 18px 40px rgba(62, 75, 194, 0.26);
 }
 
 .rounded-button:hover,
@@ -409,7 +419,23 @@ textarea::placeholder {
 .article-content {
     border-radius: 20px;
     border: 1px solid rgba(148, 163, 184, 0.12);
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(10, 15, 32, 0.88);
+}
+
+.page-container .page-content article.default-section,
+.page-container .page-content aside.default-section,
+.page-container .page-content .default-section,
+.page-container .page-content .default-section p,
+.page-container .page-content .default-section td,
+.page-container .page-content .default-section th {
+    color: var(--theme-text) !important;
+}
+
+.page-container .page-content article.default-section,
+.page-container .page-content aside.default-section,
+.page-container .page-content .default-section {
+    background: rgba(10, 15, 32, 0.9) !important;
+    border-color: rgba(124, 92, 255, 0.18) !important;
 }
 
 .related-article-container {
