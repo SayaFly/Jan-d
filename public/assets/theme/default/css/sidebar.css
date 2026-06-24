@@ -98,6 +98,7 @@ body.sidebar-collapsed .sidebar-container {
 
 body.sidebar-collapsed .main-wrapper {
     margin-left: var(--sidebar-collapsed);
+    width: calc(100% - var(--sidebar-collapsed));
 }
 
 body.sidebar-collapsed .sidebar-text,
@@ -130,11 +131,12 @@ body.sidebar-collapsed .sidebar-avatar-wrap {
 /* ── Main wrapper ─────────────────────────────────────────────── */
 .main-wrapper {
     margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
     transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     position: relative;
     z-index: 1;
 }
@@ -637,6 +639,7 @@ body.sidebar-collapsed .sidebar-avatar-wrap {
     body.sidebar-collapsed .main-wrapper,
     .main-wrapper {
         margin-left: var(--sidebar-collapsed);
+        width: calc(100% - var(--sidebar-collapsed));
     }
 
     .sidebar-text,
